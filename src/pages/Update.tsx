@@ -161,19 +161,20 @@ export const Update = () => {
   const handleCancel = () => {
     setIsModalVisible(false)
   }
-
+  
   const getRenderConfig = (record:IData):Boolean => {
     let {id,key,name, ...reset} = record
-    let flag = false;
+    var flags = false;
     for(let key in reset){
+      // eslint-disable-next-line
       ARRAY.forEach(item => {
         let Reg = new RegExp("\\b"+item+"\\b",'g')
         if(Reg.test(reset[key])){
-          flag = true;
+          flags = true;
         }
       })
     }
-    return flag
+    return flags
   }
 
   const handleOk = () => {
@@ -219,7 +220,7 @@ export const Update = () => {
 
     //检测一下是不是有key为空的情况
     let isKeyEmpty;
-    data.map(item => {
+    data.forEach(item => {
       if(!item.name){
         isKeyEmpty = true
       }
@@ -233,7 +234,7 @@ export const Update = () => {
     var obj:any = {}
     data.forEach(item => {
       const {id,name,key, ...reset} = item
-      Object.keys(reset).map(itemKey => {
+      Object.keys(reset).forEach(itemKey => {
         obj[itemKey] = {}
       })
     })
