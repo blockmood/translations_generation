@@ -114,7 +114,7 @@ export const Update = () => {
       dataIndex: '',
       key: '',
       render: (_: any, record: IData) => {
-        return <Input onChange={(e) => { onChangeInput(e, _.id) }} />
+        return <Input defaultValue={record.name} onChange={(e) => { onChangeInput(e, _.id) }} />
       }
     },
     {
@@ -233,7 +233,14 @@ export const Update = () => {
         const workbook = XLSX.read(event.target?.result,{type:'binary' })
         for(const sheet in workbook.Sheets){
           if (workbook.Sheets.hasOwnProperty(sheet)) {
-            data = data.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+            let result = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
+            let newData = result.map((item:any) => {
+              return {
+                ...item,
+                name:item.key || ''
+              }
+            })
+            data = data.concat(newData);
           }
         }
         let dataSource = data.map((item,index) => {
@@ -241,7 +248,6 @@ export const Update = () => {
             ...item,
             key:index+1,
             id:index+1,
-            name:''
           }
         })
         setData(dataSource)
