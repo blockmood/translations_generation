@@ -39,6 +39,7 @@ export const Update = () => {
   const [jsonData, setJsonData] = useState<any>({})
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [tabKey, setTabKey] = useState<number>(1)
+  // eslint-disable-next-line
   const [customizeData, setCustomizeData] = useState<CustomizeType[]>([
     {
       id:1,
